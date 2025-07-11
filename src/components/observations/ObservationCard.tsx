@@ -18,14 +18,21 @@ const Card = styled.TouchableOpacity`
   `;
 
 const StudentName = styled.Text`
-  font-size: ${({ theme }) => theme.fontSizes.large}px;
+  font-size: ${({ theme }) => theme.fontSizes.medium}px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
 `;
 
+const ClassName = styled.Text`
+  margin-top: 4px;
+  font-size: ${({ theme }) => theme.fontSizes.small}px;
+  color: ${({ theme }) => theme.colors.textLight || '#666'};
+  font-style: italic;
+`;
+
 const Description = styled.Text`
   margin-top: 8px;
-  font-size: ${({ theme }) => theme.fontSizes.medium}px;
+  font-size: ${({ theme }) => theme.fontSizes.small}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
@@ -55,6 +62,7 @@ export default function ObservationCard(props: ObservationCardProps) {
         />
       </FavoriteButton>
       <StudentName>{data.student.name}</StudentName>
+      <ClassName>{data.student.class.name}</ClassName>
       <Description>
         {truncateString(data.description, 100)}
       </Description>
