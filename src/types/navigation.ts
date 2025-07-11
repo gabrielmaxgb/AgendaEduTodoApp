@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Home: undefined;
-  ObservationDetails: { id: number };
-  ObservationForm: { id?: number };
+  ObservationDetails: { id: string };
+  ObservationForm: { id?: string };
   NotFound: undefined;
 };

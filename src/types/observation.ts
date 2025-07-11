@@ -1,11 +1,11 @@
-export interface Observation {
-  id: number;
+export interface TObservation {
+  id: string;
   student: {
     name: string;
-    id: number;
+    id: string;
     class: {
       name: string;
-      id: number;
+      id: string;
     };
   };
   description: string;

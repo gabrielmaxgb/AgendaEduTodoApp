@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Observation } from '../../types/observation';
+import { TObservation } from '../../types/observation';
+import { truncateString } from '../../helpers';
 
-interface Props {
-  data: Observation;
+interface ObservationCardProps {
+  data: TObservation;
   onPress?: () => void;
-  onToggleFavorite?: (id: number) => void;
+  onToggleFavorite?: (id: TObservation['id']) => void;
 }
 
 const Card = styled.TouchableOpacity`
@@ -14,9 +15,7 @@ const Card = styled.TouchableOpacity`
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.primary || '#ddd'};
-  
-`;
+  `;
 
 const StudentName = styled.Text`
   font-size: ${({ theme }) => theme.fontSizes.large}px;
@@ -36,11 +35,14 @@ const FavoriteButton = styled.TouchableOpacity`
   right: 12px;
 `;
 
-export default function ObservationCard({
-  data,
-  onPress,
-  onToggleFavorite,
-}: Props) {
+export default function ObservationCard(props: ObservationCardProps) {
+
+  const {
+    data,
+    onPress,
+    onToggleFavorite,
+  } = props;
+
   return (
     <Card onPress={onPress}>
       <FavoriteButton
@@ -53,7 +55,9 @@ export default function ObservationCard({
         />
       </FavoriteButton>
       <StudentName>{data.student.name}</StudentName>
-      <Description>{data.description}</Description>
+      <Description>
+        {truncateString(data.description, 100)}
+      </Description>
     </Card>
   );
 }

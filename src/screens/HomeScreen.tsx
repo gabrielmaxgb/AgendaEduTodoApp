@@ -1,22 +1,25 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
-import { useObservations } from '../queries/observations';
+import { ActivityIndicator, FlatList } from 'react-native';
 import Container from '../components/common/Container';
 import ObservationCard from '../components/observations/ObservationCard';
 import EmptyState from '../components/common/EmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types/navigation';
-
-
-const Separator = () => <View style={{ height: 12 }} />;
+import { useObservationList } from '../queries/observations';
+import FloatingButton from '../components/common/FloatingButton';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function HomeScreen() {
-  const { data, isLoading } = useObservations();
+  const { data, isLoading } = useObservationList();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   if (isLoading) {
-    return <Text>Carregando...</Text>;
+    return (
+      <Container>
+        <ActivityIndicator />
+      </Container>
+    )
   }
 
   return (
@@ -40,8 +43,12 @@ export default function HomeScreen() {
             onToggleFavorite={(id) => console.log('Favoritar ID:', id)}
           />
         )}
-        ItemSeparatorComponent={Separator}
+        // ItemSeparatorComponent={Separator}
       />
+      
+      <FloatingButton onPress={() => {}}>
+        <Ionicons name="add" size={32} color="#fff" />
+      </FloatingButton>
     </Container>
   );
 }
