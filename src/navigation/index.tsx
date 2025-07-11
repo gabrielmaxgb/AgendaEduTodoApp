@@ -1,18 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import HomeScreen from '../screens/HomeScreen';
 import ObservationDetailsScreen from '../screens/ObservationDetailsScreen';
 import ObservationFormScreen from '../screens/ObservationFormScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-
-export type RootStackParamList = {
-  Home: undefined;
-  ObservationDetails: { id: number };
-  ObservationForm: { id?: number };
-  NotFound: undefined;
-};
+import { RootStackParamList } from '../types/navigation';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
