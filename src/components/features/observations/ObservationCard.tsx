@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TObservation } from '../../types/observation';
-import { truncateString } from '../../helpers';
+import { TObservation } from '../../../types/observation';
+import { truncateString } from '../../../helpers';
 
 interface ObservationCardProps {
   data: TObservation;

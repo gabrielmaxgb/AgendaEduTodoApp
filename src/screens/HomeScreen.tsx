@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, FlatList } from 'react-native';
 import Container from '../components/common/Container';
-import ObservationCard from '../components/observations/ObservationCard';
+import ObservationCard from '../components/features/observations/ObservationCard';
 import EmptyState from '../components/common/EmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
