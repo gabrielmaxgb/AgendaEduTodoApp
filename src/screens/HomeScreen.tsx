@@ -9,9 +9,11 @@ import { RootStackParamList } from '../types/navigation';
 import { useObservationList } from '../queries/observations';
 import FloatingButton from '../components/common/FloatingButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTheme } from 'styled-components/native';
 
 export default function HomeScreen() {
   const { data, isLoading } = useObservationList();
+  const theme = useTheme();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   if (isLoading) {
@@ -46,8 +48,8 @@ export default function HomeScreen() {
         // ItemSeparatorComponent={Separator}
       />
       
-      <FloatingButton onPress={() => {}}>
-        <Ionicons name="add" size={32} color="#fff" />
+      <FloatingButton onPress={() => navigation.navigate('ObservationForm', {})}>
+        <Ionicons name="add" size={32} color={theme.colors.secondary} />
       </FloatingButton>
     </Container>
   );

@@ -5,7 +5,7 @@ const Container = styled.View`
   justify-content: start;
   align-items: start;
   padding: 16px;
-  background-color: ${({ theme }) => theme.colors.background || '#fff'};
+  background-color: ${({ theme }) => theme.colors.secondary || '#fff'};
 `;
 
 export default Container;

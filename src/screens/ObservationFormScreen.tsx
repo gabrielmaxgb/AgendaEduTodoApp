@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { TextInput, Button, Text, ActivityIndicator, Alert } from 'react-native';
+import { Button, Text, ActivityIndicator, Alert } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../types/navigation';
 import { useCreateObservation, useObservationById, useUpdateObservation } from '../queries/observations';
 import Container from '../components/common/Container';
 import { generateRandomId } from '../helpers';
+import FloatingButton from '../components/common/FloatingButton';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTheme } from 'styled-components/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import styled from 'styled-components/native';
+
+const StyledTextInput = styled.TextInput`
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.colors.border || '#ccc'};
+  margin-vertical: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.background || '#fff'};
+  color: ${({ theme }) => theme.colors.text || '#000'};
+`;
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
 export default function ObservationFormScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<ObservationFormScreenRouteProp>();
   const observationId = route.params?.id;
+  const theme = useTheme();
 
   const { data: observation, isLoading } = useObservationById(observationId ?? '', {});
   const { mutate: createObservation, isPending: isCreatingObservation } = useCreateObservation();
@@ -79,16 +95,13 @@ export default function ObservationFormScreen() {
   return (
     <Container>
       <Text>{observationId ? 'Editar Observação' : 'Nova Observação'}</Text>
-      {/* <Text>
-        { `${!!observationId && !!observation}` }
-      </Text> */}
-      <TextInput
+      <StyledTextInput
         value={observationFields.text}
         onChangeText={text => setObservationFields({ ...observationFields, text })}
         multiline
         numberOfLines={4}
         placeholder="Digite a observação"
-        style={{ borderWidth: 1, borderColor: '#ccc', marginVertical: 12, padding: 8 }}
+        placeholderTextColor="#999"
       />
       {
         observationId &&
@@ -105,6 +118,9 @@ export default function ObservationFormScreen() {
           ? <ActivityIndicator />
           : <Button title="Salvar" onPress={handleSave} />
       }
+      <FloatingButton onPress={() => navigation.navigate('ObservationForm', {})}>
+        <Ionicons name="trash" size={32} color={theme.colors.secondary} />
+      </FloatingButton>
     </Container>
   );
 }
