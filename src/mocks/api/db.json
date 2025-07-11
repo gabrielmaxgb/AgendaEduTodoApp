@@ -27,7 +27,6 @@
       "id": "2"
     },
     {
-      "id": "3",
       "student": {
         "name": "Pedro Santos",
         "id": "103",
@@ -37,7 +36,8 @@
         }
       },
       "description": "Mostra interesse em ciências.",
-      "isFavorite": false
+      "isFavorite": true,
+      "id": "3"
     },
     {
       "student": {
