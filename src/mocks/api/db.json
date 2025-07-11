@@ -2,19 +2,6 @@
   "observations": [
     {
       "student": {
-        "name": "João Silva",
-        "id": "101",
-        "class": {
-          "name": "5º Ano A",
-          "id": "1"
-        }
-      },
-      "description": "Precisa melhorar a participação. Test",
-      "isFavorite": true,
-      "id": "1"
-    },
-    {
-      "student": {
         "name": "Maria Oliveira",
         "id": "102",
         "class": {
@@ -129,58 +116,6 @@
       },
       "description": "Precisa melhorar a matemática.",
       "isFavorite": true
-    },
-    {
-      "id": "1752269947983-775690",
-      "description": "Asdasddfdsf",
-      "isFavorite": false,
-      "student": {
-        "id": "1752269947983-585180",
-        "name": "104",
-        "class": {
-          "id": "1752269947983-442777",
-          "name": ""
-        }
-      }
-    },
-    {
-      "description": "Aaaaaaaaa",
-      "isFavorite": true,
-      "student": {
-        "id": "1752270761300-899229",
-        "name": "João Silva",
-        "class": {
-          "id": "1752270761300-78502",
-          "name": ""
-        }
-      },
-      "id": "1752270761300-501723"
-    },
-    {
-      "id": "1752271177528-175017",
-      "description": "Ssdfsdfgsdfjhdgfkjsdhgikg",
-      "isFavorite": false,
-      "student": {
-        "id": "1752271177528-512456",
-        "name": "Sofia Torres",
-        "class": {
-          "id": "1752271177528-115118",
-          "name": ""
-        }
-      }
-    },
-    {
-      "id": "1752272038167-30207",
-      "description": "Ssssss",
-      "isFavorite": false,
-      "student": {
-        "id": "1752272038167-773415",
-        "name": "Maria Oliveira",
-        "class": {
-          "id": "1752272038167-347021",
-          "name": "5º Ano C"
-        }
-      }
     }
   ],
   "students": [

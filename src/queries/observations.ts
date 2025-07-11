@@ -50,3 +50,16 @@ export const useCreateObservation = () => {
     },
   });
 };
+
+export const useDeleteObservation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: TObservation['id']) => {
+      await api.delete(`/observations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['observations'] });
+    },
+  });
+};

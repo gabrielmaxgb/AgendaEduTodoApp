@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ActivityIndicator, Alert, Text } from 'react-native';
+import { Button, ActivityIndicator, Alert } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../types/navigation';
-import { useCreateObservation, useObservationById, useUpdateObservation } from '../queries/observations';
+import { useCreateObservation, useDeleteObservation, useObservationById, useUpdateObservation } from '../queries/observations';
 import Container from '../components/common/Container';
 import { generateRandomId } from '../helpers';
 import FloatingButton from '../components/common/FloatingButton';
@@ -44,6 +44,7 @@ export default function ObservationFormScreen() {
   const { data: observation, isLoading } = useObservationById(observationId ?? '', {});
   const { mutate: createObservation, isPending: isCreatingObservation } = useCreateObservation();
   const { mutate: updateObservation, isPending: isUpdatingObservation } = useUpdateObservation();
+  const { mutate: deleteObservation } = useDeleteObservation();
   const [observationFields, setObservationFields] = useState({
     text: '',
     isFavorite: false,
@@ -97,6 +98,22 @@ export default function ObservationFormScreen() {
           onError: () => Alert.alert('Erro ao criar observação'),
         }
       );
+    }
+  };
+
+  const handleDeleteObservation = () => {
+    if (observationId) {
+      deleteObservation(
+        observationId,
+        {
+          onSuccess: () => {
+            navigation.goBack();
+            Alert.alert('Sucesso ao excluir observação');
+          }
+          ,
+          onError: () => Alert.alert('Erro ao excluir observação'),
+        }
+      )
     }
   };
 
@@ -155,9 +172,13 @@ export default function ObservationFormScreen() {
           ? <ActivityIndicator />
           : <Button title="Salvar" onPress={handleSave} />
       }
-      <FloatingButton onPress={() => navigation.navigate('ObservationForm', {})}>
-        <Ionicons name="trash" size={32} color={theme.colors.secondary} />
-      </FloatingButton>
+
+      {
+        observationId &&
+        <FloatingButton onPress={() => handleDeleteObservation()}>
+          <Ionicons name="trash" size={32} color={theme.colors.secondary} />
+        </FloatingButton>
+      }
     </Container>
   );
 }
