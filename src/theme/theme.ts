@@ -1,16 +1,17 @@
 export const theme = {
   colors: {
-    secondary: '#E5D7F9', // roxo clarinho
-    cardBackground: '#FFFFFF', // fundo dos cards
-    primary: '#321B50', // azul vibrante
-    background: '#F9FAFB', // cinza claro
-    text: '#22303E', // cinza-escuro
-    textLight: '#666666', // cinza-claro
-    border: '#E5E7EB', // cinza suave
-    error: '#FF4D4F', // vermelho para erros
-    success: '#52C41A', // verde para sucesso
-    warning: '#FAAD14', // amarelo para avisos
-    info: '#1890FF', // azul para informações
+    cardBackground: '#FFFFFF',
+    primary: '#321B50',
+    secondary: '#E5D7F9',
+    terciary: '#5CBFBF',
+    background: '#F9FAFB',
+    text: '#22303E',
+    textLight: '#666666',
+    border: '#E5E7EB',
+    error: '#FE6C60',
+    success: '#52C41A',
+    warning: '#FAAD14',
+    info: '#1890FF',
   },
   spacing: {
     small: 8,

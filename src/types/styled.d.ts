@@ -7,6 +7,7 @@ declare module 'styled-components/native' {
       cardBackground: string;
       primary: string;
       secondary: string;
+      terciary: string;
       text: string;
       textLight: string;
       border: string;

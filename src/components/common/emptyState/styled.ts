@@ -37,6 +37,6 @@ export const DefaultIcon = styled.View`
 `;
 
 export const DefaultIconText = styled.Text`
-  font-size: 36px;
+  font-size: ${({ theme }) => theme.fontSizes.medium}px;
   color: ${({ theme }) => theme.colors.primary};
 `;

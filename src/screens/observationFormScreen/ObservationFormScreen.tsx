@@ -230,7 +230,7 @@ export default function ObservationFormScreen() {
                   <Ionicons
                     name={observationFormFields.isFavorite ? 'star' : 'star-outline'}
                     size={32}
-                    color={theme.colors.warning}
+                    color={theme.colors.terciary}
                   />
                 )
             }

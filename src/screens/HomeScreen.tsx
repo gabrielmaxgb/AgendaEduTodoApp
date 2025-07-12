@@ -66,7 +66,7 @@ export default function HomeScreen() {
       }
       
       <FloatingButton onPress={() => navigation.navigate('ObservationForm', { id: undefined })}>
-        <Ionicons name="add" size={32} color={theme.colors.secondary} />
+        <Ionicons name="add" size={32} color={theme.colors.terciary} />
       </FloatingButton>
     </Container>
   );
