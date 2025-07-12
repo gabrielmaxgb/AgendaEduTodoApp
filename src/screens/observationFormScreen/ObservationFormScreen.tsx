@@ -40,10 +40,17 @@ export default function ObservationFormScreen() {
   });
 
   const isSaveButtonDisabled = useMemo(() => {
-    return !observationFormFields.text.trim() ||
-      (!observationId && (!observationFormFields.selectedClass || !observationFormFields.selectedStudent));
-  }
-  , [observationFormFields, observationId]);
+    const hasText = observationFormFields.text.trim();
+    const hasRequiredFields = observationId || (observationFormFields.selectedClass && observationFormFields.selectedStudent);
+    
+    if (observationId && observation) {
+      const originalText = observation.description || '';
+      const hasTextChanged = observationFormFields.text.trim() !== originalText.trim();
+      return !hasText || !hasTextChanged;
+    }
+    
+    return !hasText || !hasRequiredFields;
+  }, [observationFormFields, observationId, observation]);
 
   useEffect(() => {
     if (observation) {
@@ -63,11 +70,29 @@ export default function ObservationFormScreen() {
   }, [observation]);
 
   const toggleFavorite = () => {
+    const newValue = !observationFormFields.isFavorite;
+  
     setObservationFields((fields) => ({
       ...fields,
-      isFavorite: !fields.isFavorite,
+      isFavorite: newValue,
     }));
+  
+    if (observationId && observation) {
+      updateObservation(
+        {
+          ...observation,
+          isFavorite: newValue,
+        },
+        {
+          onSuccess: () => {
+            Alert.alert('Observação favoritada com sucesso');
+          },
+          onError: () => Alert.alert('Erro ao atualizar observação'),
+        }
+      );
+    }
   };
+  
 
   const handleSave = () => {
     if (observationId && observation) {
@@ -186,9 +211,13 @@ export default function ObservationFormScreen() {
         observationId &&
         <>
           <FavFloatingButton
-            onPress={() => toggleFavorite()}
+            onPress={toggleFavorite}
           >
-            <Ionicons name={ observationFormFields.isFavorite ? 'star' : 'star-outline'} size={32} color={theme.colors.warning} />
+            <Ionicons
+              name={observationFormFields.isFavorite ? 'star' : 'star-outline'}
+              size={32}
+              color={theme.colors.warning}
+            />
           </FavFloatingButton>
           <FloatingButton onPress={() => handleDeleteObservation()}>
             <Ionicons name="trash" size={32} color={theme.colors.secondary} />
