@@ -1,19 +1,5 @@
 {
-  "observations": [
-    {
-      "description": "Asfdsfsfser",
-      "isFavorite": true,
-      "student": {
-        "id": "1752287129070-742308",
-        "name": "Sofia Torres",
-        "class": {
-          "id": "1752287129070-382555",
-          "name": "5º Ano C"
-        }
-      },
-      "id": "1752287129070-718988"
-    }
-  ],
+  "observations": [],
   "students": [
     {
       "id": "101",
