@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, ActivityIndicator, Alert } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Alert } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../types/navigation';
 import { useCreateObservation, useDeleteObservation, useObservationById, useUpdateObservation } from '../../queries/observations';
@@ -12,7 +12,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import StudentSelect from '../../components/features/students/StudentSelect';
 import { SelectOption } from '../../components/common/select/Select';
 import ClassSelect from '../../components/features/classes/ClassSelect';
-import { StyledHeaderText, StyledTextInput } from './styled';
+import { ActionArea, FavFloatingButton, SaveButton, SaveButtonText, SaveButtonActivityIndicator, StyledHeaderText, StyledTextInput } from './styled';
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
@@ -39,6 +39,12 @@ export default function ObservationFormScreen() {
     selectedStudent: undefined,
   });
 
+  const isSaveButtonDisabled = useMemo(() => {
+    return !observationFormFields.text.trim() ||
+      (!observationId && (!observationFormFields.selectedClass || !observationFormFields.selectedStudent));
+  }
+  , [observationFormFields, observationId]);
+
   useEffect(() => {
     if (observation) {
       setObservationFields({
@@ -55,6 +61,13 @@ export default function ObservationFormScreen() {
       });
     }
   }, [observation]);
+
+  const toggleFavorite = () => {
+    setObservationFields((fields) => ({
+      ...fields,
+      isFavorite: !fields.isFavorite,
+    }));
+  };
 
   const handleSave = () => {
     if (observationId && observation) {
@@ -80,10 +93,10 @@ export default function ObservationFormScreen() {
           isFavorite: false,
           student: {
             id: generateRandomId(),
-            name: observationFormFields.selectedStudent?.label || '',
+            name: observationFormFields.selectedStudent?.label?.trim() || '',
             class: { 
               id: generateRandomId(),
-              name: observationFormFields.selectedClass?.label || '', 
+              name: observationFormFields.selectedClass?.label?.trim() || '', 
             }
           }
         },
@@ -128,21 +141,21 @@ export default function ObservationFormScreen() {
           <ClassSelect
             value={observationFormFields.selectedClass?.value}
             onSelect={(selectedClass) => {
-              setObservationFields({
-                ...observationFormFields,
+              setObservationFields((prev) => ({
+                ...prev,
                 selectedClass,
                 selectedStudent: undefined,
-              });
+              }));
             }}
             placeholder="Escolha uma classe"
           />
           <StudentSelect
             value={observationFormFields.selectedStudent?.value}
             onSelect={(selectedStudent) => {
-              setObservationFields({
-                ...observationFormFields,
+              setObservationFields((prev) => ({
+                ...prev,
                 selectedStudent,
-              });
+              }));
             }}
             disabled={!observationFormFields.selectedClass}
             placeholder="Escolha um estudante"
@@ -159,32 +172,28 @@ export default function ObservationFormScreen() {
         placeholder="Digite a observação"
         placeholderTextColor="#999"
       />
-      {
-        observationId &&
-        <Button
-          title={observationFormFields.isFavorite ? 'Desfavoritar' : 'Favoritar'}
-          onPress={() => setObservationFields(fields => ({
-            ...fields,
-            isFavorite: !fields.isFavorite
-          }))}
-        />
-      }
-      {
-        isCreatingObservation || isUpdatingObservation
-          ? <ActivityIndicator />
-          : (
-            
-              
-              <Button title="Salvar" onPress={handleSave} />
-            
-          )
-      }
+
+      <ActionArea>
+        <SaveButton onPress={handleSave} disabled={isSaveButtonDisabled}>
+          <SaveButtonText>Salvar</SaveButtonText>
+          {(isCreatingObservation || isUpdatingObservation) && (
+            <SaveButtonActivityIndicator size="small" color="white" />
+          )}
+        </SaveButton>
+      </ActionArea>
 
       {
         observationId &&
-        <FloatingButton onPress={() => handleDeleteObservation()}>
-          <Ionicons name="trash" size={32} color={theme.colors.secondary} />
-        </FloatingButton>
+        <>
+          <FavFloatingButton
+            onPress={() => toggleFavorite()}
+          >
+            <Ionicons name={ observationFormFields.isFavorite ? 'star' : 'star-outline'} size={32} color={theme.colors.warning} />
+          </FavFloatingButton>
+          <FloatingButton onPress={() => handleDeleteObservation()}>
+            <Ionicons name="trash" size={32} color={theme.colors.secondary} />
+          </FloatingButton>
+        </>
       }
     </Container>
   );
