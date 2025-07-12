@@ -4,7 +4,7 @@ import { TClass } from '../types/observation';
 
 export const useClassesList = () => {
   return useQuery<TClass[]>({
-    queryKey: ['students'],
+    queryKey: ['classes'],
     queryFn: async () => {
       const res = await api.get<TClass[]>('/classes');
       return res.data;
