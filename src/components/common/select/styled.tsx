@@ -1,6 +1,10 @@
 import styled from "styled-components/native";
 
-export const SelectContainer = styled.TouchableOpacity`
+interface SelectContainerProps {
+  disabled?: boolean;
+}
+
+export const SelectContainer = styled.TouchableOpacity<SelectContainerProps>`
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.primary || '#ccc'};
   border-radius: 4px;
@@ -9,6 +13,7 @@ export const SelectContainer = styled.TouchableOpacity`
   min-height: 48px;
   justify-content: center;
   margin-vertical: 8px;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
 `;
 
 export const SelectText = styled.Text`

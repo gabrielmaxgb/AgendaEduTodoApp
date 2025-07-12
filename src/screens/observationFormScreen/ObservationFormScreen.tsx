@@ -21,15 +21,22 @@ export default function ObservationFormScreen() {
   const route = useRoute<ObservationFormScreenRouteProp>();
   const observationId = route.params?.id;
   const theme = useTheme();
-  const [selectedClass, setSelectedClass] = useState<SelectOption>();
-  const [selectedStudent, setSelectedStudent] = useState<SelectOption>();
-  const { data: observation, isLoading } = useObservationById(observationId ?? '', {});
+  const { data: observation, isLoading } = useObservationById(observationId, {
+    enabled: !!observationId,
+  });
   const { mutate: createObservation, isPending: isCreatingObservation } = useCreateObservation();
   const { mutate: updateObservation, isPending: isUpdatingObservation } = useUpdateObservation();
   const { mutate: deleteObservation } = useDeleteObservation();
-  const [observationFields, setObservationFields] = useState({
+  const [observationFormFields, setObservationFields] = useState<{
+    text: string;
+    isFavorite: boolean;
+    selectedClass: SelectOption | undefined;
+    selectedStudent: SelectOption | undefined;
+  }>({
     text: '',
     isFavorite: false,
+    selectedClass: undefined,
+    selectedStudent: undefined,
   });
 
   useEffect(() => {
@@ -37,6 +44,14 @@ export default function ObservationFormScreen() {
       setObservationFields({
         text: observation.description || '',
         isFavorite: observation.isFavorite || false,
+        selectedClass: {
+          value: observation.student?.class?.id || '',
+          label: observation.student?.class?.name || '',
+        },
+        selectedStudent: {
+          value: observation.student?.id || '',
+          label: observation.student?.name || '',
+        }
       });
     }
   }, [observation]);
@@ -46,8 +61,8 @@ export default function ObservationFormScreen() {
       updateObservation(
         {
           ...observation,
-          description: observationFields.text,
-          isFavorite: observationFields.isFavorite,
+          description: observationFormFields.text,
+          isFavorite: observationFormFields.isFavorite,
         },
         {
           onSuccess: () => {
@@ -61,14 +76,14 @@ export default function ObservationFormScreen() {
       createObservation(
         {
           id: generateRandomId(),
-          description: observationFields.text,
+          description: observationFormFields.text,
           isFavorite: false,
           student: {
             id: generateRandomId(),
-            name: selectedStudent?.label || '',
+            name: observationFormFields.selectedStudent?.label || '',
             class: { 
               id: generateRandomId(),
-              name: selectedClass?.label || '', 
+              name: observationFormFields.selectedClass?.label || '', 
             }
           }
         },
@@ -110,28 +125,35 @@ export default function ObservationFormScreen() {
       {
         (!observationId) && (
           <>
-            <ClassSelect
-              value={selectedClass?.value}
-              onSelect={setSelectedClass}
-              placeholder="Escolha uma classe"
-            />
-
-            {
-              selectedClass && (
-                <StudentSelect
-                  value={selectedStudent?.value}
-                  onSelect={setSelectedStudent}
-                  placeholder="Escolha um estudante"
-                />
-              )
-            }
+          <ClassSelect
+            value={observationFormFields.selectedClass?.value}
+            onSelect={(selectedClass) => {
+              setObservationFields({
+                ...observationFormFields,
+                selectedClass,
+                selectedStudent: undefined,
+              });
+            }}
+            placeholder="Escolha uma classe"
+          />
+          <StudentSelect
+            value={observationFormFields.selectedStudent?.value}
+            onSelect={(selectedStudent) => {
+              setObservationFields({
+                ...observationFormFields,
+                selectedStudent,
+              });
+            }}
+            disabled={!observationFormFields.selectedClass}
+            placeholder="Escolha um estudante"
+          />
           </>
         )
       }
 
       <StyledTextInput
-        value={observationFields.text}
-        onChangeText={text => setObservationFields({ ...observationFields, text })}
+        value={observationFormFields.text}
+        onChangeText={text => setObservationFields({ ...observationFormFields, text })}
         multiline
         numberOfLines={8}
         placeholder="Digite a observação"
@@ -140,7 +162,7 @@ export default function ObservationFormScreen() {
       {
         observationId &&
         <Button
-          title={observationFields.isFavorite ? 'Desfavoritar' : 'Favoritar'}
+          title={observationFormFields.isFavorite ? 'Desfavoritar' : 'Favoritar'}
           onPress={() => setObservationFields(fields => ({
             ...fields,
             isFavorite: !fields.isFavorite
@@ -150,7 +172,12 @@ export default function ObservationFormScreen() {
       {
         isCreatingObservation || isUpdatingObservation
           ? <ActivityIndicator />
-          : <Button title="Salvar" onPress={handleSave} />
+          : (
+            
+              
+              <Button title="Salvar" onPress={handleSave} />
+            
+          )
       }
 
       {

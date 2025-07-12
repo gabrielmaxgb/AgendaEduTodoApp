@@ -15,13 +15,16 @@ interface SelectProps {
   disabled?: boolean;
 }
 
-export default function Select({ 
-  placeholder = 'Selecione uma opção', 
-  value, 
-  options, 
-  onSelect, 
-  disabled = false 
-}: SelectProps) {
+export default function Select(props: SelectProps) {
+
+  const { 
+    placeholder = 'Selecione uma opção', 
+    value, 
+    options, 
+    onSelect, 
+    disabled = false 
+  } = props;
+
   const [isVisible, setIsVisible] = useState(false);
 
   const selectedOption = options.find(option => option.value === value);

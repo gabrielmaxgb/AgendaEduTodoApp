@@ -12,13 +12,11 @@ export const useObservationList = () => {
   });
 };
 
-export const useObservationById = (id: TObservation['id'], options = {}) => {
+export const useObservationById = (id?: string, options = {}) => {
   return useQuery<TObservation>({
-    queryKey: ['observations', id],
-    queryFn: async () => {
-      const res = await api.get<TObservation>(`/observations/${id}`);
-      return res.data;
-    },
+    queryKey: ['observation', id],
+    queryFn: () => api.get(`/observations/${id}`).then(res => res.data),
+    enabled: !!id,
     ...options,
   });
 };
