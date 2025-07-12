@@ -35,7 +35,7 @@ export default function ObservationCard(props: ObservationCardProps) {
             <Ionicons
               name={data.isFavorite ? 'star' : 'star-outline'}
               size={24}
-              color={data.isFavorite ? theme.colors.warning : theme.colors.textLight}
+              color={data.isFavorite ? theme.colors.terciary : theme.colors.textLight}
             />
           </FavoriteButton>
         )
