@@ -1,10 +1,10 @@
 export const theme = {
   colors: {
-    secondary: '#F3E8FF', // roxo clarinho
+    secondary: '#E5D7F9', // roxo clarinho
     cardBackground: '#FFFFFF', // fundo dos cards
-    primary: '#4E60FF', // azul vibrante
-    // secondary: '#FF9F1C', // laranja/dourado
-    text: '#333333', // cinza-escuro
+    primary: '#321B50', // azul vibrante
+    background: '#F9FAFB', // cinza claro
+    text: '#22303E', // cinza-escuro
     textLight: '#666666', // cinza-claro
     border: '#E5E7EB', // cinza suave
     error: '#FF4D4F', // vermelho para erros

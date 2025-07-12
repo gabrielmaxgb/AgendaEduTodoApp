@@ -1,5 +1,5 @@
 import React from 'react';
-import Select, { SelectOption } from '../../common/Select';
+import Select, { SelectOption } from '../../common/select/Select';
 import { useStudentsList } from '../../../queries/students';
 
 interface StudentSelectProps {
