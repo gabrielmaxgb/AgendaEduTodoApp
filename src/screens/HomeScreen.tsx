@@ -28,7 +28,10 @@ export default function HomeScreen() {
     <Container>
       {
         data &&  data.length === 0
-          ? <EmptyState />
+          ? <EmptyState 
+              title="Sem observações ainda" 
+              description='Você ainda não cadastrou nenhuma observação. Toque no botão "+" para começar!' 
+            />
           : (
             <FlatList
               data={data}
