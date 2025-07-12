@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
 import ObservationFormScreen from '../screens/observationFormScreen/ObservationFormScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types/navigation';
+import HomeScreen from '../screens/HomeScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

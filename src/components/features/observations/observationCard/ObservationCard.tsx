@@ -7,6 +7,8 @@ import { Card, ClassName, Description, FavoriteButton, StudentName } from './sty
 
 interface ObservationCardProps {
   data: TObservation;
+  hideFavoriteButton?: boolean;
+  hideDescription?: boolean;
   onPress?: () => void;
   onToggleFavorite?: (id: TObservation['id']) => void;
 }
@@ -16,26 +18,37 @@ export default function ObservationCard(props: ObservationCardProps) {
     data,
     onPress,
     onToggleFavorite,
+    hideFavoriteButton = false,
+    hideDescription = false,
   } = props;
 
   const theme = useTheme();
 
   return (
     <Card onPress={onPress}>
-      <FavoriteButton
-        onPress={() => onToggleFavorite?.(data.id)}
-      >
-        <Ionicons
-          name={data.isFavorite ? 'star' : 'star-outline'}
-          size={24}
-          color={data.isFavorite ? theme.colors.warning : theme.colors.textLight}
-        />
-      </FavoriteButton>
+
+      {
+        !hideFavoriteButton && (
+          <FavoriteButton
+            onPress={() => onToggleFavorite?.(data.id)}
+          >
+            <Ionicons
+              name={data.isFavorite ? 'star' : 'star-outline'}
+              size={24}
+              color={data.isFavorite ? theme.colors.warning : theme.colors.textLight}
+            />
+          </FavoriteButton>
+        )
+      }
+
       <StudentName>{data.student.name}</StudentName>
       <ClassName>{data.student.class.name}</ClassName>
-      <Description>
-        {truncateString(data.description, 100)}
-      </Description>
+      {
+        !hideDescription && data.description && data.description.trim() !== '' && 
+        <Description numberOfLines={2}>
+          {truncateString(data.description, 100)}
+        </Description>
+      }
     </Card>
   );
 }

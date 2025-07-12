@@ -19,6 +19,13 @@ export const StyledHeaderText = styled.Text`
   margin-bottom: 16px;
 `;
 
+export const FieldLabel = styled.Text`
+  font-size: ${({ theme }) => theme.fontSizes.small}px;
+  color: ${({ theme }) => theme.colors.text || '#000'};
+  font-weight: bold;
+  margin-top: 10px;
+`;
+
 export const ActionArea = styled.View`
   flex-direction: row;
   justify-content: center;
@@ -50,7 +57,6 @@ export const SaveButton = styled.TouchableOpacity`
   background-color: ${({ theme, disabled }) => 
     disabled ? theme.colors.textLight : theme.colors.primary || '#6200ee'};
   flex-direction: row;
-  min-width: fit-content;
   padding-horizontal: 20px;
   padding-vertical: 14px;
   border-radius: 8px;

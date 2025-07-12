@@ -12,7 +12,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import StudentSelect from '../../components/features/students/StudentSelect';
 import { SelectOption } from '../../components/common/select/Select';
 import ClassSelect from '../../components/features/classes/ClassSelect';
-import { ActionArea, FavFloatingButton, SaveButton, SaveButtonText, SaveButtonActivityIndicator, StyledHeaderText, StyledTextInput } from './styled';
+import { ActionArea, FavFloatingButton, SaveButton, SaveButtonText, SaveButtonActivityIndicator, StyledHeaderText, StyledTextInput, FieldLabel } from './styled';
+import ObservationCard from '../../components/features/observations/observationCard/ObservationCard';
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
@@ -85,7 +86,7 @@ export default function ObservationFormScreen() {
         },
         {
           onSuccess: () => {
-            Alert.alert('Observação favoritada com sucesso');
+            // Alert.alert('Observação favoritada com sucesso');
           },
           onError: () => Alert.alert('Erro ao atualizar observação'),
         }
@@ -159,7 +160,15 @@ export default function ObservationFormScreen() {
   return (
     <Container>
       <StyledHeaderText>{observationId ? 'Editar Observação' : 'Nova Observação'}</StyledHeaderText>
-
+      {
+        observationId && observation && (
+          <ObservationCard
+            data={observation}
+            hideFavoriteButton
+            hideDescription
+          />
+        )
+      }
       {
         (!observationId) && (
           <>
@@ -189,6 +198,7 @@ export default function ObservationFormScreen() {
         )
       }
 
+      <FieldLabel>Observação:</FieldLabel>
       <StyledTextInput
         value={observationFormFields.text}
         onChangeText={text => setObservationFields({ ...observationFormFields, text })}
@@ -213,14 +223,20 @@ export default function ObservationFormScreen() {
           <FavFloatingButton
             onPress={toggleFavorite}
           >
-            <Ionicons
-              name={observationFormFields.isFavorite ? 'star' : 'star-outline'}
-              size={32}
-              color={theme.colors.warning}
-            />
+            {
+              isUpdatingObservation
+                ? <ActivityIndicator size="small" color={theme.colors.background} />
+                : (
+                  <Ionicons
+                    name={observationFormFields.isFavorite ? 'star' : 'star-outline'}
+                    size={32}
+                    color={theme.colors.warning}
+                  />
+                )
+            }
           </FavFloatingButton>
-          <FloatingButton onPress={() => handleDeleteObservation()}>
-            <Ionicons name="trash" size={32} color={theme.colors.secondary} />
+          <FloatingButton onPress={() => handleDeleteObservation()} style={{ backgroundColor: theme.colors.error }}>
+            <Ionicons name="trash" size={32} color={theme.colors.background} />
           </FloatingButton>
         </>
       }
