@@ -80,6 +80,78 @@
         "name": "5º Ano E",
         "id": "5"
       }
+    },
+    {
+      "id": "111",
+      "name": "Carlos Souza",
+      "class": {
+        "name": "5º Ano A",
+        "id": "1"
+      }
+    },
+    {
+      "id": "112",
+      "name": "Laura Almeida",
+      "class": {
+        "name": "5º Ano B",
+        "id": "2"
+      }
+    },
+    {
+      "id": "113",
+      "name": "Mariana Lima",
+      "class": {
+        "name": "5º Ano C",
+        "id": "3"
+      }
+    },
+    {
+      "id": "114",
+      "name": "Thiago Costa",
+      "class": {
+        "name": "5º Ano D",
+        "id": "4"
+      }
+    },
+    {
+      "id": "115",
+      "name": "Camila Rocha",
+      "class": {
+        "name": "5º Ano E",
+        "id": "5"
+      }
+    },
+    {
+      "id": "116",
+      "name": "Bruno Santos",
+      "class": {
+        "name": "5º Ano F",
+        "id": "6"
+      }
+    },
+    {
+      "id": "117",
+      "name": "Juliana Torres",
+      "class": {
+        "name": "5º Ano F",
+        "id": "6"
+      }
+    },
+    {
+      "id": "118",
+      "name": "Eduardo Martins",
+      "class": {
+        "name": "5º Ano F",
+        "id": "6"
+      }
+    },
+    {
+      "id": "119",
+      "name": "Patrícia Souza",
+      "class": {
+        "name": "5º Ano F",
+        "id": "6"
+      }
     }
   ],
   "classes": [
@@ -102,6 +174,10 @@
     {
       "id": "5",
       "name": "5º Ano E"
+    },
+    {
+      "id": "6",
+      "name": "5º Ano F"
     }
   ]
 }
