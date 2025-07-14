@@ -11,10 +11,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import StudentSelect from '../../components/features/students/StudentSelect';
 import { SelectOption } from '../../components/common/select/Select';
 import ClassSelect from '../../components/features/classes/ClassSelect';
-import { ActionArea, FavFloatingButton, SaveButton, SaveButtonText, SaveButtonActivityIndicator, StyledTextInput, FieldLabel } from './styled';
+import { ActionArea, FavFloatingButton, StyledTextInput, FieldLabel } from './styled';
 import ObservationCard from '../../components/features/observations/observationCard/ObservationCard';
 import { Container, Title } from '../../components/common';
 import PageHeader from '../../components/common/PageHeader';
+import Button from '../../components/common/button/Button';
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
@@ -149,6 +150,14 @@ export default function ObservationFormScreen() {
     }
   };
 
+  const handleClassSelect = (selectedClass: SelectOption) => {
+    setObservationFields((prev) => ({
+      ...prev,
+      selectedClass,
+      selectedStudent: undefined,
+    }));
+  };  
+
   const handleDeleteObservation = () => {
     if (observationId) {
       deleteObservation(
@@ -209,13 +218,7 @@ export default function ObservationFormScreen() {
           <>
           <ClassSelect
             value={observationFormFields.selectedClass?.value}
-            onSelect={(selectedClass) => {
-              setObservationFields((prev) => ({
-                ...prev,
-                selectedClass,
-                selectedStudent: undefined,
-              }));
-            }}
+            onSelect={handleClassSelect}
             placeholder="Escolha uma classe"
           />
           <StudentSelect
@@ -243,12 +246,11 @@ export default function ObservationFormScreen() {
         placeholderTextColor="#999"
       />
       <ActionArea>
-        <SaveButton onPress={handleSave} disabled={isSaveButtonDisabled}>
-          <SaveButtonText>Salvar</SaveButtonText>
-          {(isCreatingObservation || isUpdatingObservation) && (
-            <SaveButtonActivityIndicator size="small" color="white" />
-          )}
-        </SaveButton>
+        <Button 
+          onPress={handleSave} 
+          disabled={isSaveButtonDisabled} 
+          title='Salvar' 
+          loading={isCreatingObservation || isUpdatingObservation} />
       </ActionArea>
 
       {

@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import { ActivityIndicator, FlatList } from 'react-native';
-import ObservationCard from '../components/features/observations/observationCard/ObservationCard';
-import EmptyState from '../components/common/emptyState/EmptyState';
+import ObservationCard from '../../components/features/observations/observationCard/ObservationCard';
+import EmptyState from '../../components/common/emptyState/EmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types/navigation';
-import { useObservationList } from '../queries/observations';
-import FloatingButton from '../components/common/floatingButton/FloatingButton';
+import { RootStackParamList } from '../../types/navigation';
+import { useObservationList } from '../../queries/observations';
+import FloatingButton from '../../components/common/floatingButton/FloatingButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
-import { Container } from '../components/common';
-import PageHeader from '../components/common/PageHeader';
+import { Container } from '../../components/common';
+import PageHeader from '../../components/common/PageHeader';
 
 export default function HomeScreen() {
   const { data: observationsList, isLoading } = useObservationList();
@@ -28,6 +28,7 @@ export default function HomeScreen() {
   const favoritesFirst = useMemo(() => {
     return [...favoriteItems, ...notFavoriteItems];
   }, [favoriteItems, notFavoriteItems]);
+
 
   if (isLoading) {
     return (

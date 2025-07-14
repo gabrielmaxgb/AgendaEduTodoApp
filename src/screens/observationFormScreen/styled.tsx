@@ -45,30 +45,3 @@ export const FavFloatingButton = styled(FloatingButton)`
   shadow-opacity: 0.2;
   shadow-radius: 2px;
 `;
-
-export const SaveButton = styled.TouchableOpacity`
-  background-color: ${({ theme, disabled }) => 
-    disabled ? theme.colors.textLight : theme.colors.primary || '#6200ee'};
-  flex-direction: row;
-  padding-horizontal: 20px;
-  padding-vertical: 14px;
-  border-radius: 8px;
-  align-items: center;
-  justify-content: center;
-  elevation: 4;
-  shadow-color: #000;
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.2;
-  shadow-radius: 2px;
-  opacity: ${({ disabled }) => disabled ? 0.6 : 1};
-`;
-
-export const SaveButtonText = styled.Text`
-  color: white;
-  font-size: ${({ theme }) => theme.fontSizes.medium};
-  font-weight: bold;
-`;
-
-export const SaveButtonActivityIndicator = styled.ActivityIndicator`
-  margin-left: 8px;
-`;
