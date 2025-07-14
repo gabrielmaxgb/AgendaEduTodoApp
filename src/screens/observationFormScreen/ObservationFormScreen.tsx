@@ -18,6 +18,20 @@ import PageHeader from '../../components/common/PageHeader';
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
+interface TObservationFormFields {
+  text: string;
+  isFavorite: boolean;
+  selectedClass?: SelectOption | undefined;
+  selectedStudent?: SelectOption | undefined;
+};
+
+const OBSERVATION_FORM_INITIAL_STATE: TObservationFormFields = {
+  text: '',
+  isFavorite: false,
+  selectedClass: undefined,
+  selectedStudent: undefined,
+};
+
 export default function ObservationFormScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<ObservationFormScreenRouteProp>();
@@ -29,17 +43,7 @@ export default function ObservationFormScreen() {
   const { mutate: createObservation, isPending: isCreatingObservation } = useCreateObservation();
   const { mutate: updateObservation, isPending: isUpdatingObservation } = useUpdateObservation();
   const { mutate: deleteObservation } = useDeleteObservation();
-  const [observationFormFields, setObservationFields] = useState<{
-    text: string;
-    isFavorite: boolean;
-    selectedClass: SelectOption | undefined;
-    selectedStudent: SelectOption | undefined;
-  }>({
-    text: '',
-    isFavorite: false,
-    selectedClass: undefined,
-    selectedStudent: undefined,
-  });
+  const [observationFormFields, setObservationFields] = useState<TObservationFormFields>(OBSERVATION_FORM_INITIAL_STATE);
 
   const isEditingObservation = useMemo(() => {
     return !!observationId && !!observation;
@@ -164,7 +168,7 @@ export default function ObservationFormScreen() {
   if (gettingObservationById) {
     return (
       <Container>
-        <ActivityIndicator />;
+        <ActivityIndicator />
       </Container>
     );
   }
@@ -182,14 +186,14 @@ export default function ObservationFormScreen() {
             <ObservationCard
               data={observation ? observation : {
                 id: '',
-                description: '',
+                description: 'Sem descrição',
                 isFavorite: false,
                 student: {
                   id: '',
-                  name: '',
+                  name: 'Aluno não indentificado',
                   class: {
                     id: '',
-                    name: '',
+                    name: 'Classe não identificada',
                   },
                 },
               }}
