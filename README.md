@@ -90,8 +90,29 @@ If you're having issues getting the above steps to work, see the [Troubleshootin
 
 To learn more about React Native, take a look at the following resources:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+## Requisitos obrigatórios
+
+- [x] Deve ser em **React Native CLI** para melhor semelhança ao contexto do projeto da AgendaEdu
+- [x] **TypeScript**
+- [x] **Custom Hooks**
+- [ ] **Redux Saga**
+- [x] **React Navigation**
+- [x] **Styled Components** ou outra solução de estilização robusta
+- [ ] **Testes de Integração** (Jest / React Testing Library)
+- [ ] **CI/CD** com Github Actions (Pull Request Test Coverage Report)
+- [x] **JSON-Server** para simular API local ou hospedada
+- [ ] **Performance** (Otimizações em listas, redução de re-renders)
+- [ ] **Monitoramento** (Firebase Analytics/Crashlytics ou Sentry)
+
+## Requisitos bônus
+
+Esses requisitos não são obrigatórios, mas serão levados em consideração como pontos extras no momento da avaliação.
+
+- [ ] **Storybook** (Documentação de componentes globais)
+- [ ] **Testes E2E** (Detox ou Maestro)
+- [x] **Microinterações** (Animations, Toast, EmptyState, Loadings)
+- [x] **React Query**
+- [ ] **Personalizações nativas**: Ícone e SplashScreen
+
+
