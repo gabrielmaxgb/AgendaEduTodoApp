@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { ActivityIndicator, FlatList } from 'react-native';
-import Container from '../components/common/Container';
 import ObservationCard from '../components/features/observations/observationCard/ObservationCard';
 import EmptyState from '../components/common/emptyState/EmptyState';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +9,8 @@ import { useObservationList } from '../queries/observations';
 import FloatingButton from '../components/common/floatingButton/FloatingButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
+import { Container } from '../components/common';
+import PageHeader from '../components/common/PageHeader';
 
 export default function HomeScreen() {
   const { data: observationsList, isLoading } = useObservationList();
@@ -38,30 +39,30 @@ export default function HomeScreen() {
 
   return (
     <Container>
+      <PageHeader title='Bem vindo, Beltrano!' subtitle='Aqui você pode encontrar todas as suas observações cadastradas.' />
+
       {
-        observationsList &&  observationsList?.length === 0
+        observationsList?.length === 0
           ? <EmptyState 
               title="Sem observações ainda" 
               description='Você ainda não cadastrou nenhuma observação. Toque no botão "+" para começar!' 
             />
           : (
-            <>
-              <FlatList
-                data={favoritesFirst}
-                keyExtractor={(item) => String(item.id)}
-                contentContainerStyle={{ paddingBottom: 66 }}
-                renderItem={({ item }) => (
-                  <ObservationCard
-                    data={item}
-                    onPress={() => {
-                      navigation.navigate('ObservationForm', {
-                        id: item.id,
-                      });
-                    }}
-                  />
-                )}
-              />
-            </>
+            <FlatList
+              data={favoritesFirst}
+              keyExtractor={(item) => String(item.id)}
+              contentContainerStyle={{ paddingBottom: 66 }}
+              renderItem={({ item }) => (
+                <ObservationCard
+                  data={item}
+                  onPress={() => {
+                    navigation.navigate('ObservationForm', {
+                      id: item.id,
+                    });
+                  }}
+                />
+              )}
+            />
           )
       }
       

@@ -12,13 +12,6 @@ export const StyledTextInput = styled.TextInput`
   color: ${({ theme }) => theme.colors.text || '#000'};
 `;
 
-export const StyledHeaderText = styled.Text`
-  font-size: ${({ theme }) => theme.fontSizes.medium}px;
-  color: ${({ theme }) => theme.colors.text || '#000'};
-  font-weight: bold;
-  margin-bottom: 16px;
-`;
-
 export const FieldLabel = styled.Text`
   font-size: ${({ theme }) => theme.fontSizes.small}px;
   color: ${({ theme }) => theme.colors.text || '#000'};

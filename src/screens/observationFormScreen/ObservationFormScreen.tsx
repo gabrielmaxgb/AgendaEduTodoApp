@@ -3,7 +3,6 @@ import { ActivityIndicator, Alert } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../types/navigation';
 import { useCreateObservation, useDeleteObservation, useObservationById, useUpdateObservation } from '../../queries/observations';
-import Container from '../../components/common/Container';
 import { generateRandomId } from '../../helpers';
 import FloatingButton from '../../components/common/floatingButton/FloatingButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,8 +11,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import StudentSelect from '../../components/features/students/StudentSelect';
 import { SelectOption } from '../../components/common/select/Select';
 import ClassSelect from '../../components/features/classes/ClassSelect';
-import { ActionArea, FavFloatingButton, SaveButton, SaveButtonText, SaveButtonActivityIndicator, StyledHeaderText, StyledTextInput, FieldLabel } from './styled';
+import { ActionArea, FavFloatingButton, SaveButton, SaveButtonText, SaveButtonActivityIndicator, StyledTextInput, FieldLabel } from './styled';
 import ObservationCard from '../../components/features/observations/observationCard/ObservationCard';
+import { Container, Title } from '../../components/common';
+import PageHeader from '../../components/common/PageHeader';
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
@@ -22,7 +23,7 @@ export default function ObservationFormScreen() {
   const route = useRoute<ObservationFormScreenRouteProp>();
   const observationId = route.params?.id;
   const theme = useTheme();
-  const { data: observation, isLoading } = useObservationById(observationId, {
+  const { data: observation, isLoading: gettingObservationById } = useObservationById(observationId, {
     enabled: !!observationId,
   });
   const { mutate: createObservation, isPending: isCreatingObservation } = useCreateObservation();
@@ -39,6 +40,14 @@ export default function ObservationFormScreen() {
     selectedClass: undefined,
     selectedStudent: undefined,
   });
+
+  const isEditingObservation = useMemo(() => {
+    return !!observationId && !!observation;
+  }, [observationId, observation]);
+
+  const isCreatingNewObservation = useMemo(() => {
+    return !observationId && !observation;
+  }, [observationId, observation]);
 
   const isSaveButtonDisabled = useMemo(() => {
     const hasText = observationFormFields.text.trim();
@@ -93,7 +102,6 @@ export default function ObservationFormScreen() {
       );
     }
   };
-  
 
   const handleSave = () => {
     if (observationId && observation) {
@@ -153,24 +161,47 @@ export default function ObservationFormScreen() {
     }
   };
 
-  if (isLoading) {
-    return <ActivityIndicator />;
+  if (gettingObservationById) {
+    return (
+      <Container>
+        <ActivityIndicator />;
+      </Container>
+    );
   }
 
   return (
     <Container>
-      <StyledHeaderText>{observationId ? 'Editar Observação' : 'Nova Observação'}</StyledHeaderText>
+      <PageHeader title={observationId ? 'Editar Observação' : 'Nova Observação'}
+        subtitle={observationId ? 'Edite os detalhes da observação' : 'Preencha os detalhes da nova observação'}
+      />
+
       {
-        observationId && observation && (
-          <ObservationCard
-            data={observation}
-            hideFavoriteButton
-            hideDescription
-          />
+        isEditingObservation && (
+          <>
+            <Title>Aluno:</Title>
+            <ObservationCard
+              data={observation ? observation : {
+                id: '',
+                description: '',
+                isFavorite: false,
+                student: {
+                  id: '',
+                  name: '',
+                  class: {
+                    id: '',
+                    name: '',
+                  },
+                },
+              }}
+              hideFavoriteButton
+              hideDescription
+            />
+          </>
         )
       }
+
       {
-        (!observationId) && (
+        (isCreatingNewObservation) && (
           <>
           <ClassSelect
             value={observationFormFields.selectedClass?.value}
@@ -207,7 +238,6 @@ export default function ObservationFormScreen() {
         placeholder="Digite a observação"
         placeholderTextColor="#999"
       />
-
       <ActionArea>
         <SaveButton onPress={handleSave} disabled={isSaveButtonDisabled}>
           <SaveButtonText>Salvar</SaveButtonText>
@@ -218,7 +248,7 @@ export default function ObservationFormScreen() {
       </ActionArea>
 
       {
-        observationId &&
+        isEditingObservation &&
         <>
           <FavFloatingButton
             onPress={toggleFavorite}
