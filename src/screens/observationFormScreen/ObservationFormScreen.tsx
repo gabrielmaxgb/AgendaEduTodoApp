@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../types/navigation';
@@ -86,7 +86,7 @@ export default function ObservationFormScreen() {
     }
   }, [observation]);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = useCallback(() => {
     const newValue = !observationFormFields.isFavorite;
   
     setObservationFields((fields) => ({
@@ -105,7 +105,9 @@ export default function ObservationFormScreen() {
             showToast({
               type: 'success',
               text1: 'Observação atualizada',
-              text2: newValue ? 'Observação favoritada com sucesso' : 'Observação desfavoritada com sucesso',
+              text2: newValue
+                ? 'Observação favoritada com sucesso'
+                : 'Observação desfavoritada com sucesso',
             });
           },
           onError: () => {
@@ -118,7 +120,13 @@ export default function ObservationFormScreen() {
         }
       );
     }
-  };
+  }, [
+    observationFormFields.isFavorite,
+    observationId,
+    observation,
+    updateObservation,
+    showToast,
+  ]);
 
   const handleSave = () => {
     if (observationId && observation) {
@@ -190,7 +198,7 @@ export default function ObservationFormScreen() {
     }));
   };  
 
-  const handleDeleteObservation = () => {
+  const handleDeleteObservation = useCallback(() => {
     if (observationId) {
       deleteObservation(
         observationId,
@@ -202,8 +210,7 @@ export default function ObservationFormScreen() {
               text1: 'Observação excluída',
               text2: 'Observação excluída com sucesso',
             });
-          }
-          ,
+          },
           onError: () => {
             showToast({
               type: 'error',
@@ -214,7 +221,14 @@ export default function ObservationFormScreen() {
         }
       )
     }
-  };
+  }, [observationId, deleteObservation, navigation, showToast]);
+  
+  const handleChangeText = useCallback((text: string) => {
+    setObservationFields((prev) => ({
+      ...prev,
+      text,
+    }));
+  }, []);
 
   if (gettingObservationById) {
     return (
@@ -281,7 +295,7 @@ export default function ObservationFormScreen() {
       <FieldLabel>Observação:</FieldLabel>
       <StyledTextInput
         value={observationFormFields.text}
-        onChangeText={text => setObservationFields({ ...observationFormFields, text })}
+        onChangeText={handleChangeText}
         multiline
         numberOfLines={8}
         placeholder="Digite a observação"
@@ -314,7 +328,7 @@ export default function ObservationFormScreen() {
                 )
             }
           </FavFloatingButton>
-          <FloatingButton onPress={() => handleDeleteObservation()} style={{ backgroundColor: theme.colors.error }}>
+          <FloatingButton onPress={handleDeleteObservation} style={{ backgroundColor: theme.colors.error }}>
             <Ionicons name="trash" size={32} color={theme.colors.background} />
           </FloatingButton>
         </>

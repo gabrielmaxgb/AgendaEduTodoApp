@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ActivityIndicator, FlatList } from 'react-native';
 import ObservationCard from '../../components/features/observations/observationCard/ObservationCard';
 import EmptyState from '../../components/common/emptyState/EmptyState';
@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
 import { Container } from '../../components/common';
 import PageHeader from '../../components/common/PageHeader';
+import { TObservation } from '../../types/observation';
 
 export default function HomeScreen() {
   const { data: observationsList, isLoading } = useObservationList();
@@ -28,6 +29,10 @@ export default function HomeScreen() {
   const favoritesFirst = useMemo(() => {
     return [...favoriteItems, ...notFavoriteItems];
   }, [favoriteItems, notFavoriteItems]);
+
+  const handlePress = useCallback((id: TObservation['id']) => {
+    navigation.navigate('ObservationForm', { id });
+  }, [navigation]);
 
   if (isLoading) {
     return (
@@ -51,15 +56,10 @@ export default function HomeScreen() {
             <FlatList
               data={favoritesFirst}
               keyExtractor={(item) => String(item.id)}
-              // contentContainerStyle={{ paddingBottom: 66 }}
               renderItem={({ item }) => (
                 <ObservationCard
                   data={item}
-                  onPress={() => {
-                    navigation.navigate('ObservationForm', {
-                      id: item.id,
-                    });
-                  }}
+                  onPress={() => handlePress(item.id)}
                 />
               )}
             />
