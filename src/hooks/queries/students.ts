@@ -1,6 +1,6 @@
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import { useQuery } from '@tanstack/react-query';
-import { TStudent } from '../types/observation';
+import { TStudent } from '../../types/observation';
 
 export const useStudentsList = () => {
   return useQuery<TStudent[]>({

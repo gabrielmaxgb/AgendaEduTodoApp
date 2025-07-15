@@ -5,7 +5,7 @@ import EmptyState from '../../components/common/emptyState/EmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types/navigation';
-import { useObservationList } from '../../queries/observations';
+import { useObservationList } from '../../hooks/queries/observations';
 import FloatingButton from '../../components/common/floatingButton/FloatingButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
@@ -29,7 +29,6 @@ export default function HomeScreen() {
     return [...favoriteItems, ...notFavoriteItems];
   }, [favoriteItems, notFavoriteItems]);
 
-
   if (isLoading) {
     return (
       <Container>
@@ -52,7 +51,7 @@ export default function HomeScreen() {
             <FlatList
               data={favoritesFirst}
               keyExtractor={(item) => String(item.id)}
-              contentContainerStyle={{ paddingBottom: 66 }}
+              // contentContainerStyle={{ paddingBottom: 66 }}
               renderItem={({ item }) => (
                 <ObservationCard
                   data={item}

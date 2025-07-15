@@ -1,6 +1,6 @@
 import React from 'react';
 import Select, { SelectOption } from '../../common/select/Select';
-import { useClassesList } from '../../../queries/classes';
+import { useClassesList } from '../../../hooks/queries/classes';
 
 interface ClassSelectProps {
   value?: string;

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Alert } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../types/navigation';
-import { useCreateObservation, useDeleteObservation, useObservationById, useUpdateObservation } from '../../queries/observations';
+import { useCreateObservation, useDeleteObservation, useObservationById, useUpdateObservation } from '../../hooks/queries/observations';
 import { generateRandomId } from '../../helpers';
 import FloatingButton from '../../components/common/floatingButton/FloatingButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,6 +16,7 @@ import ObservationCard from '../../components/features/observations/observationC
 import { Container, Title } from '../../components/common';
 import PageHeader from '../../components/common/PageHeader';
 import Button from '../../components/common/button/Button';
+import { useToast } from '../../hooks/custom/useToast';
 
 type ObservationFormScreenRouteProp = RouteProp<RootStackParamList, 'ObservationForm'>;
 
@@ -44,6 +45,7 @@ export default function ObservationFormScreen() {
   const { mutate: createObservation, isPending: isCreatingObservation } = useCreateObservation();
   const { mutate: updateObservation, isPending: isUpdatingObservation } = useUpdateObservation();
   const { mutate: deleteObservation } = useDeleteObservation();
+  const { showToast } = useToast();
   const [observationFormFields, setObservationFields] = useState<TObservationFormFields>(OBSERVATION_FORM_INITIAL_STATE);
 
   const isEditingObservation = useMemo(() => {
@@ -100,9 +102,19 @@ export default function ObservationFormScreen() {
         },
         {
           onSuccess: () => {
-            // Alert.alert('Observação favoritada com sucesso');
+            showToast({
+              type: 'success',
+              text1: 'Observação atualizada',
+              text2: newValue ? 'Observação favoritada com sucesso' : 'Observação desfavoritada com sucesso',
+            });
           },
-          onError: () => Alert.alert('Erro ao atualizar observação'),
+          onError: () => {
+            showToast({
+              type: 'error',
+              text1: 'Erro ao atualizar observação',
+              text2: 'Não foi possível atualizar o status de favorito',
+            });
+          },
         }
       );
     }
@@ -119,9 +131,19 @@ export default function ObservationFormScreen() {
         {
           onSuccess: () => {
             navigation.goBack()
-            Alert.alert('Sucesso ao atualizar observação')
+            showToast({
+              type: 'success',
+              text1: 'Observação atualizada',
+              text2: 'Observação atualizada com sucesso',
+            });
           },
-          onError: () => Alert.alert('Erro ao atualizar observação'),
+          onError: () => {
+            showToast({
+              type: 'error',
+              text1: 'Erro ao atualizar observação',
+              text2: 'Não foi possível atualizar a observação',
+            });
+          },
         }
       );
     } else {
@@ -142,9 +164,19 @@ export default function ObservationFormScreen() {
         {
           onSuccess: () => {
             navigation.goBack()
-            Alert.alert('Sucesso ao criar observação')
+            showToast({
+              type: 'success',
+              text1: 'Observação criada',
+              text2: 'Observação criada com sucesso',
+            });
           },
-          onError: () => Alert.alert('Erro ao criar observação'),
+          onError: () => {
+            showToast({
+              type: 'error',
+              text1: 'Erro ao criar observação',
+              text2: 'Não foi possível criar a observação',
+            });
+          },
         }
       );
     }
@@ -165,10 +197,20 @@ export default function ObservationFormScreen() {
         {
           onSuccess: () => {
             navigation.goBack();
-            Alert.alert('Sucesso ao excluir observação');
+            showToast({
+              type: 'success',
+              text1: 'Observação excluída',
+              text2: 'Observação excluída com sucesso',
+            });
           }
           ,
-          onError: () => Alert.alert('Erro ao excluir observação'),
+          onError: () => {
+            showToast({
+              type: 'error',
+              text1: 'Erro ao excluir observação',
+              text2: 'Não foi possível excluir a observação',
+            });
+          },
         }
       )
     }
@@ -250,7 +292,8 @@ export default function ObservationFormScreen() {
           onPress={handleSave} 
           disabled={isSaveButtonDisabled} 
           title='Salvar' 
-          loading={isCreatingObservation || isUpdatingObservation} />
+          loading={isCreatingObservation || isUpdatingObservation}
+        />
       </ActionArea>
 
       {

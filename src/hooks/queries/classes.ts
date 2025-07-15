@@ -1,6 +1,6 @@
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import { useQuery } from '@tanstack/react-query';
-import { TClass } from '../types/observation';
+import { TClass } from '../../types/observation';
 
 export const useClassesList = () => {
   return useQuery<TClass[]>({

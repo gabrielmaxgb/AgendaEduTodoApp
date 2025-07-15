@@ -1,6 +1,6 @@
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { TObservation } from '../types/observation';
+import { TObservation } from '../../types/observation';
 
 export const useObservationList = () => {
   return useQuery<TObservation[]>({

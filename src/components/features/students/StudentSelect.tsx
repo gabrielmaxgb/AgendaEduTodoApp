@@ -1,6 +1,6 @@
 import React from 'react';
 import Select, { SelectOption } from '../../common/select/Select';
-import { useStudentsList } from '../../../queries/students';
+import { useStudentsList } from '../../../hooks/queries/students';
 
 interface StudentSelectProps {
   value?: string;
