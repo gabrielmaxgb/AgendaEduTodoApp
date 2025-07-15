@@ -102,8 +102,8 @@ To learn more about React Native, take a look at the following resources:
 - [ ] **Testes de Integração** (Jest / React Testing Library)
 - [ ] **CI/CD** com Github Actions (Pull Request Test Coverage Report)
 - [x] **JSON-Server** para simular API local ou hospedada
-- [ ] **Performance** (Otimizações em listas, redução de re-renders)
-- [ ] **Monitoramento** (Firebase Analytics/Crashlytics ou Sentry)
+- [x] **Performance** (Otimizações em listas, redução de re-renders)
+- [x] **Monitoramento** (Firebase Analytics/Crashlytics ou Sentry)
 
 ## Requisitos bônus
 
@@ -113,6 +113,6 @@ Esses requisitos não são obrigatórios, mas serão levados em consideração c
 - [ ] **Testes E2E** (Detox ou Maestro)
 - [x] **Microinterações** (Animations, Toast, EmptyState, Loadings)
 - [x] **React Query**
-- [ ] **Personalizações nativas**: Ícone e SplashScreen
+- [x] **Personalizações nativas**: Ícone e SplashScreen
 
 
