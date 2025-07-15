@@ -1,3 +1,33 @@
+## Requisitos obrigatórios
+
+- [x] Deve ser em **React Native CLI** para melhor semelhança ao contexto do projeto da AgendaEdu
+- [x] **TypeScript**
+- [x] **Custom Hooks**
+- [ ] **Redux Saga**
+- [x] **React Navigation**
+- [x] **Styled Components** ou outra solução de estilização robusta
+- [ ] **Testes de Integração** (Jest / React Testing Library)
+- [ ] **CI/CD** com Github Actions (Pull Request Test Coverage Report)
+- [x] **JSON-Server** para simular API local ou hospedada
+- [x] **Performance** (Otimizações em listas, redução de re-renders)
+- [x] **Monitoramento** (Firebase Analytics/Crashlytics ou Sentry)
+
+## Requisitos bônus
+
+Esses requisitos não são obrigatórios, mas serão levados em consideração como pontos extras no momento da avaliação.
+
+- [ ] **Storybook** (Documentação de componentes globais)
+- [ ] **Testes E2E** (Detox ou Maestro)
+- [x] **Microinterações** (Animations, Toast, EmptyState, Loadings)
+- [x] **React Query**
+- [x] **Personalizações nativas**: Ícone e SplashScreen
+
+
+
+
+https://github.com/user-attachments/assets/d6457994-6f7a-4312-992e-bd619661997d
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
@@ -85,34 +115,3 @@ You've successfully run and modified your React Native App. :partying_face:
 # Troubleshooting
 
 If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-
-## Requisitos obrigatórios
-
-- [x] Deve ser em **React Native CLI** para melhor semelhança ao contexto do projeto da AgendaEdu
-- [x] **TypeScript**
-- [x] **Custom Hooks**
-- [ ] **Redux Saga**
-- [x] **React Navigation**
-- [x] **Styled Components** ou outra solução de estilização robusta
-- [ ] **Testes de Integração** (Jest / React Testing Library)
-- [ ] **CI/CD** com Github Actions (Pull Request Test Coverage Report)
-- [x] **JSON-Server** para simular API local ou hospedada
-- [x] **Performance** (Otimizações em listas, redução de re-renders)
-- [x] **Monitoramento** (Firebase Analytics/Crashlytics ou Sentry)
-
-## Requisitos bônus
-
-Esses requisitos não são obrigatórios, mas serão levados em consideração como pontos extras no momento da avaliação.
-
-- [ ] **Storybook** (Documentação de componentes globais)
-- [ ] **Testes E2E** (Detox ou Maestro)
-- [x] **Microinterações** (Animations, Toast, EmptyState, Loadings)
-- [x] **React Query**
-- [x] **Personalizações nativas**: Ícone e SplashScreen
-
-
